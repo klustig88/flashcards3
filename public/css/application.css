@@ -1,0 +1,101 @@
+.container {
+  margin: 20px auto;
+  width: 600px;
+  padding: 0px 20px 20px 20px;
+  border: 1px dotted black;
+}
+
+body {
+  background: url('background.jpg');
+}
+
+th {
+  text-align: left;
+}
+
+header { 
+  padding-top: 0; 
+  height: 50px; 
+  top: 0px; 
+  margin-top: 0;
+  background: rgba(34, 34, 34, .85);
+  color: #CCC;
+  box-shadow: 0 1px 4px 1px #000;
+  overflow: hidden;
+}
+
+a.signupbutton {
+  float: right;
+  margin: 10px;
+  height: 25px;
+  padding: 3px;
+  background-color: rgba(240, 134, 180, 0.5);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+    border-radius:6px;
+    color: #fff;
+    font-family: 'helvetica';
+    font-size: 20px;
+    text-decoration: none;
+    cursor: pointer;
+     border:none;
+
+}
+
+header form {
+  margin-top: 8px;
+}
+
+h1 {
+  margin: 20px;
+  color: #FFF;
+  text-align: left;
+  font-size: 125px;
+
+}
+
+#homelink {
+    padding: 5px 10px;
+    background: #4479BA;
+    color: #FFF;
+    text-shadow: 1px 1px #00235C;
+    text-decoration: none;
+}
+
+#input {
+  height: 12px;
+  
+}
+
+#title {
+  top: 50%;
+  margin: -150px 0 0 0 ;
+  position: absolute;
+  font-size: 150px;
+  font-style: bold;
+  color: #333;
+}
+  #title span{
+    display: block;
+    margin: 0 0 0 100px;
+  }
+
+#submit {   
+    background-color: rgba(240, 134, 180, 0.5);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius:6px;
+    color: #fff;
+    font-family: 'helvetica';
+    font-size: 20px;
+    text-decoration: none;
+    cursor: pointer;
+     border:none;
+}
+
+#submit:hover {
+    border: none;
+    background: #89d79f;
+    box-shadow: 0px 0px 1px #777;
+
+}

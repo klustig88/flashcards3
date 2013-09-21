@@ -1,0 +1,17 @@
+<h1>Question</h1>
+
+<div> <%= @deck.category %> <div><br>
+<div> <%= @card.question %> <div><br>
+
+
+<form action="/answer/<%= @deck.category %>/<%= @card.id + 1 %>/<%= @round.id %>" method="POST">
+Your Answer:<input type="text" name="answer">
+<input type="submit" value="submit" id="submit">
+</form>
+
+
+
+
+<form action="/end/<%=@deck.category%>/<%=@card.id%>/<%=@round.id%>" method="GET">
+<input type="submit" value="ENDGAME" id="submit">
+</form>

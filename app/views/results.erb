@@ -1,0 +1,25 @@
+<h1><%= @user.username.capitalize %>, these are your results:</h1>
+  
+  <h2>Your Score: <%= @round.score %><br> Amount of Questions: <%= @deck.cards.length %><br> Percentage <%= (@round.score / @deck.cards.length.to_f)*100 %>%</h2> 
+
+  <ul>
+    <li>Games Played:</li>
+    <li>X out of Y</li>
+  </ul>    
+
+<table>
+  <% @user_1.each do |round| %>
+  <tr>
+    <td>Previous Round Day:<%= round.created_at %></td><td>Previous Round Score:<%= round.score %></td>
+  </tr>
+  <% end %>
+</table>
+
+
+ 
+
+
+
+<button id="submit" onclick="window.location.href='/<%= @user.username %>'">Profile Page</button>
+
+
