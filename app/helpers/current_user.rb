@@ -1,5 +1,5 @@
 
 def current_user
-  @current_user ||= User.find_by_is(session[:id])
+  @current_user ||= User.find_by_id(session[:id])
 end
 

@@ -3,15 +3,6 @@ get '/' do
   erb :index
 end
 
-get '/start' do
-
-  @deck = Deck.first
-  @round = Round.create 
-  @card = @deck.cards.first
-  
-  erb :question
-end
-
 get '/signup' do
   erb :sign_up
 end
@@ -43,7 +34,7 @@ get '/answer/:category/:id/:roundid' do
 end
 
 
-get '/end/:category/:id/:roundid' do
+get '/end/:category/:roundid/:id' do
   @round = Round.find_by_id(params[:roundid])
   @user = User.find_by_id(session[:id])
   @deck = Deck.first
@@ -54,10 +45,7 @@ end
 #________________post
 
 post '/create_user' do
-  username = params[:username]
-  email = params[:email]
-  password = params[:password]
-  @current_user = User.new(username: username, email: email, password: password)
+  @current_user = User.new(username: params[:username], email: params[:email], password: params[:password])
   if @current_user.save
     session[:id] = @current_user.id
     redirect to ("/#{@current_user.username}")
@@ -67,33 +55,25 @@ post '/create_user' do
 end
 
 post '/login' do
- username = params[:username]
- password= params[:password]
  @deck = Deck.find_by_id(1)
- @sample = User.find_by_username(params[:username])
-   if @sample
-    @current_user = User.authenticate(params[:username],params[:password])
-      if @current_user
-        session[:id]= @current_user.id
-        redirect to ("/#{@current_user.username}")
-      else
-        redirect to ('/')
-      end
+ @validated = User.find_by_username(params[:username])
+   if @validated
+    @current_user = User.authenticate(params[:username], params[:password])
+    session[:id] = @current_user.id
+    redirect to ("/#{@current_user.username}")
     else
     redirect to ('/')
   end
 end
 
-post '/answer/:category/:id/:roundid' do
- answer = params[:answer]
- category = params[:category]
+post '/answer/:category/:roundid/:id' do
  card_id = params[:id].to_i - 1
- @deck = Deck.first
+ @deck = Deck.find_by_category(params[:category].gsub('%20', ' '))
  @card = @deck.cards.find_by_id(card_id)
  @round = Round.find_by_id(params[:roundid])
- @actual_answer = Card.find_by_id(card_id)
+ @actual_answer = Card.find_by_id(card_id).answer.downcase
   if @card.id < @deck.cards.length
-     if answer.downcase == @actual_answer.answer.downcase
+     if params[:answer].downcase == @actual_answer
        @round.score += 1
        @round.save
        @card = Card.find(@card.id += 1)
@@ -104,6 +84,6 @@ post '/answer/:category/:id/:roundid' do
        erb :question
      end  
   else
-    redirect to ("/end/#{category}/#{params[:id]}/#{params[:roundid]}")
+    redirect to ("/end/#{params[:category]}/#{params[:roundid]}/#{params[:id]}")
   end
 end
