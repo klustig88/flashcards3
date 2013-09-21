@@ -1,6 +1,5 @@
-
-
-
-<button id="Light it up!" onclick="window.location.href='/answer/<%= @deck.category %>/<%= @card.id%>/<%= @round.id %>'">
 <h1><%= @user.first.username %> welcome to Flashcards! </h1>
 <h1>Start a game</h1>
+
+
+<button id="submit" onclick="window.location.href='/answer/<%= @deck.category %>/<%= @card.id%>/<%= @round.id %>'">Light it up!</button>

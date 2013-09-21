@@ -1,7 +1,6 @@
-<h1>Question</h1>
+<h1 id="question"> Category: <br> <%= @deck.category %></h1>
+<h1 id="something">Question: <%= @card.question %> </h1>
 
-<div> <%= @deck.category %> <div><br>
-<div> <%= @card.question %> <div><br>
 
 
 <form action="/answer/<%= @deck.category %>/<%= @card.id + 1 %>/<%= @round.id %>" method="POST">
