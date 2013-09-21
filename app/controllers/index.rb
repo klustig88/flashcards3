@@ -72,14 +72,15 @@ post '/answer/:category/:roundid/:id' do
  @card = @deck.cards.find_by_id(card_id)
  @round = Round.find_by_id(params[:roundid])
  @actual_answer = Card.find_by_id(card_id).answer.downcase
-  if @card.id < @deck.cards.length
+  if @round.counter < @deck.cards.length
+    @round.counter += 1
      if params[:answer].downcase == @actual_answer
        @round.score += 1
        @round.save
-       @card = Card.find(@card.id += 1)
+       @card = @deck.cards[@round.counter]
        erb :question
      else
-       @card = Card.find(@card.id += 1)
+       @card = @deck.cards[@round.counter]
        @round.save
        erb :question
      end  
