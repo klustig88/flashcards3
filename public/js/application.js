@@ -1,7 +1,13 @@
-$(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
+// $(document).ready(function() {
+//   $("#guess").submit(function(event){
+//     event.preventDefault();
+//     var user_input = $('#user_input :input')
+//     console.log( "jeepers, is this thing even working")
+//     $.post("/answer/<%=@deck.category%>/<%=@round.id%>/<%=@card.id%>", #guess :input, function( data ){)
+//     $( "h1" ).css( "color", "red" ); 
+//     });
+//   });
+// });
 
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
-});
+
+// .post( url, data, function( parameter here is what is returned))
