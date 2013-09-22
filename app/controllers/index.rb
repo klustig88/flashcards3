@@ -28,8 +28,7 @@ get '/answer/:category' do
   @card = @deck.cards.first
   @round.counter += 1
   @round.save
-  puts "-----jkdlsfgldsldsljglfdkl"
-  puts "@round.counter #{@round.counter}"
+
 
  
  erb :question
