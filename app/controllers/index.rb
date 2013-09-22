@@ -15,9 +15,6 @@ end
 get '/:username' do
   if session[:id] 
     @user = User.where(username: params[:username])
-    @deck = Deck.first
-    @round = Round.create(user_id: session[:id])
-    @card = @deck.cards.first
 
     erb :profile
   else
@@ -25,12 +22,17 @@ get '/:username' do
   end
 end
 
-get '/answer/:category/:id/:roundid' do
+get '/answer/:category' do
+  @round = Round.create(user_id: session[:id])
   @deck = Deck.find_by_category(params[:category].gsub('%20', ' '))
-  @round = Round.find_by_id(params[:roundid]) 
   @card = @deck.cards.first
+  @round.counter += 1
+  @round.save
+  puts "-----jkdlsfgldsldsljglfdkl"
+  puts "@round.counter #{@round.counter}"
 
-  erb :question
+ 
+ erb :question
 end
 
 
@@ -67,24 +69,30 @@ post '/login' do
 end
 
 post '/answer/:category/:roundid/:id' do
- card_id = params[:id].to_i - 1
+ #card_id = params[:id].to_i - 1
  @deck = Deck.find_by_category(params[:category].gsub('%20', ' '))
- @card = @deck.cards.find_by_id(card_id)
+ @card = @deck.cards.find_by_id(params[:id])
  @round = Round.find_by_id(params[:roundid])
- @actual_answer = Card.find_by_id(card_id).answer.downcase
-  if @round.counter < @deck.cards.length
-    @round.counter += 1
-     if params[:answer].downcase == @actual_answer
-       @round.score += 1
-       @round.save
-       @card = @deck.cards[@round.counter]
-       erb :question
-     else
-       @card = @deck.cards[@round.counter]
-       @round.save
-       erb :question
-     end  
-  else
-    redirect to ("/end/#{params[:category]}/#{params[:roundid]}/#{params[:id]}")
-  end
+ @actual_answer = Card.find_by_id(params[:id]).answer.downcase
+
+puts "round_counter: #{@round.counter}"
+puts "deck.cards.length #{@deck.cards.length}"
+
+if @round.counter >= @deck.cards.length
+  redirect to ("/end/#{params[:category]}/#{params[:roundid]}/#{params[:id]}")  
+else
+  @round.counter += 1
+  @round.save
+   if params[:answer].downcase == @actual_answer
+     @round.score += 1
+     @round.save
+     @card = @deck.cards[@round.counter-1]
+     puts "@card = #{@card}"
+     erb :question
+   else
+     @card = @deck.cards[@round.counter-1]
+     @round.save
+     erb :question
+   end
+  end  
 end
