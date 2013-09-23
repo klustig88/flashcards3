@@ -23,8 +23,9 @@ get '/:username' do
 end
 
 get '/answer/:category' do
-  @round = Round.create(user_id: session[:id])
   @deck = Deck.find_by_category(params[:category].gsub('%20', ' '))
+  @round = Round.create(user_id: session[:id])
+  @round.deck_id = @deck.id
   @card = @deck.cards.first
   @round.save
  erb :question

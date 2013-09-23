@@ -4,11 +4,11 @@
 
   
 <h2 id="results">Previous Rounds</h2>
-  <table id="results">
     <% @user_1.each do |round| %>
-    <tr>
-      <h2 id="results"> <td id="results"><%= round.created_at %></td><td id="results">Previous Round Score:<%= round.score %></td></h2>
-    </tr>
+      <h2 id="results">
+        Score:<%= round.score %>
+      </h2>
+    
     <% end %>
   </table>
 
