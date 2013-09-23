@@ -1,3 +1,11 @@
+html {
+  background: url('background.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .container {
   margin: 20px auto;
   width: 600px;
@@ -5,9 +13,9 @@
   border: 1px dotted black;
 }
 
-body {
+/*body {
   background: url('background.jpg');
-}
+}*/
 
 th {
   text-align: left;
@@ -51,7 +59,7 @@ h1 {
   color: #FFF;
   text-align: left;
   font-size: 125px;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 

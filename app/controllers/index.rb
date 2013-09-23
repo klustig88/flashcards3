@@ -26,11 +26,7 @@ get '/answer/:category' do
   @round = Round.create(user_id: session[:id])
   @deck = Deck.find_by_category(params[:category].gsub('%20', ' '))
   @card = @deck.cards.first
-  @round.counter += 1
   @round.save
-
-
- 
  erb :question
 end
 
@@ -38,7 +34,7 @@ end
 get '/end/:category/:roundid/:id' do
   @round = Round.find_by_id(params[:roundid])
   @user = User.find_by_id(session[:id])
-  @deck = Deck.first
+  @deck = Deck.find_by_category(params[:category])
   @user_1 = Round.where(user_id: session[:id])
 
   erb :results
@@ -68,30 +64,33 @@ post '/login' do
 end
 
 post '/answer/:category/:roundid/:id' do
- #card_id = params[:id].to_i - 1
+ @round = Round.find_by_id(params[:roundid])
+ 
+ @round.save
  @deck = Deck.find_by_category(params[:category].gsub('%20', ' '))
  @card = @deck.cards.find_by_id(params[:id])
- @round = Round.find_by_id(params[:roundid])
- @actual_answer = Card.find_by_id(params[:id]).answer.downcase
-
-puts "round_counter: #{@round.counter}"
-puts "deck.cards.length #{@deck.cards.length}"
+ @card = @deck.cards[@round.counter]
 
 if @round.counter >= @deck.cards.length
   redirect to ("/end/#{params[:category]}/#{params[:roundid]}/#{params[:id]}")  
 else
+   erb :question
+  end  
+end
+
+post '/checkanswer/:category/:roundid/:id' do
+  @round = Round.find_by_id(params[:roundid])
+  @card = Card.find_by_id(params[:id])
+  @actual_answer = Card.find_by_id(params[:id]).answer.downcase
   @round.counter += 1
-  @round.save
-   if params[:answer].downcase == @actual_answer
+ if params[:answer].downcase == @actual_answer
      @round.score += 1
      @round.save
-     @card = @deck.cards[@round.counter-1]
-     puts "@card = #{@card}"
-     erb :question
+     content_type :json
+     {correctness: true}.to_json
    else
-     @card = @deck.cards[@round.counter-1]
      @round.save
-     erb :question
+     content_type :json
+     {correctness: false}.to_json
    end
-  end  
 end
